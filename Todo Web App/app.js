@@ -107,16 +107,13 @@ export default class Todo{
             b3.title = "Complete"
             b3.innerHTML = `<i class="fa-solid fa-circle-check">`
             b3.addEventListener("click",()=>{
-                let t = {...todo}
-                t.done = false;
-                b3.parentElement.parentElement.parentElement.remove()
-                Todo.createTodoElement(t,pending_todo_div)
-
                 let array = JSON.parse(localStorage.getItem("todos")) 
-                let idx = array.findIndex((item)=>{return item.id == t.id})
+                let idx = array.findIndex((item)=>{return item.id == todo.id})
                 array[idx].done = false
                 localStorage.setItem("todos",JSON.stringify(array))
 
+                b3.parentElement.parentElement.parentElement.remove()
+                Todo.createTodoElement(array[idx],pending_todo_div)
                 showPendingTodoTab()
             })
         }
@@ -124,15 +121,14 @@ export default class Todo{
             b3.title = "Pending"
             b3.innerHTML = `<i class="fa-solid fa-hourglass-half"></i>`
             b3.addEventListener("click",()=>{
-                let t = {...todo}
-                t.done = true;
-                b3.parentElement.parentElement.parentElement.remove()
-                Todo.createTodoElement(t,complete_todo_div)
-
                 let array = JSON.parse(localStorage.getItem("todos")) 
-                let idx = array.findIndex((item)=>{return item.id === t.id})
+                let idx = array.findIndex((item)=>{return item.id === todo.id})
                 array[idx].done = true
                 localStorage.setItem("todos",JSON.stringify(array))
+                
+                b3.parentElement.parentElement.parentElement.remove()
+                Todo.createTodoElement(array[idx],complete_todo_div)
+
 
                 showCompleteTodoTab()
             })
